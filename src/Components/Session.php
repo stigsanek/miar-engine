@@ -9,7 +9,7 @@ class Session
 {
     /**
      * Проверяет аутентификацию пользователя
-     * @return boolean
+     * @return bool
      */
     public function isAuthUser()
     {
@@ -74,7 +74,7 @@ class Session
 
     /**
      * Проверяет роль admin
-     * @return boolean
+     * @return bool
      */
     public function isAdmin()
     {
@@ -83,7 +83,7 @@ class Session
 
     /**
      * Проверяет роль user
-     * @return boolean
+     * @return bool
      */
     public function isUser()
     {
@@ -92,7 +92,7 @@ class Session
 
     /**
      * Проверяет роль guest
-     * @return boolean
+     * @return bool
      */
     public function isGuest()
     {

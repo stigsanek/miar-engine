@@ -9,7 +9,7 @@ class Request
 {
     /**
      * Проверяет входящий запрос на тип GIT
-     * @return boolean
+     * @return bool
      */
     public function isGet()
     {
@@ -18,7 +18,7 @@ class Request
 
     /**
      * Проверяет входящий запрос на тип POST
-     * @return boolean
+     * @return bool
      */
     public function isPost()
     {
@@ -48,7 +48,7 @@ class Request
     /**
      * Загружает данные в форму
      * @param object $form - форма
-     * @param boolean $isTrim - флаг отсечения пробелов по краям
+     * @param bool $isTrim - флаг отсечения пробелов по краям
      */
     public function loadData(object $form, bool $isTrim = true)
     {
@@ -72,7 +72,7 @@ class Request
     /**
      * Проверяет отправку формы
      * @param string $name - имя кнопки отправки в форме
-     * @return boolean
+     * @return bool
      */
     public function isSubmitted(string $name)
     {

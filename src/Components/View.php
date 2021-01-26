@@ -39,7 +39,7 @@ class View
      * Рендерит шаблон
      * @param string $viewName - имя шаблона
      * @param array $params - параметры
-     * @param boolean $isPrint - флаг отображения шаблона
+     * @param bool $isPrint - флаг отображения шаблона
      * @return string
      */
     public function renderTemplate(string $viewName, array $params = [], bool $isPrint = false)

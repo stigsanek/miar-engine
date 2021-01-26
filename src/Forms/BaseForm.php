@@ -98,7 +98,7 @@ class BaseForm
 
     /**
      * Проверяет получение данных и запускает валидацию
-     * @return boolean
+     * @return bool
      */
     public function isReady()
     {

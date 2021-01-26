@@ -97,7 +97,7 @@ class BaseController
 
     /**
      * Проверяет роль admin
-     * @return boolean
+     * @return bool
      */
     protected function checkAdmin()
     {
