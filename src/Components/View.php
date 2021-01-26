@@ -10,45 +10,44 @@ class View
     /**
      * Параметры шаблона
      */
-    private $layoutParams = [];
+    private $params = [];
 
     /**
-     * Устанавливает параметры в $layoutParams
-     * @param string $key - ключ
-     * @param mixed $value- значение
+     * Устанавливает параметры в $params
+     * @param array $params - параметры
      */
-    public function setLayoutParam(string $key, $value)
+    public function setParams(array $params)
     {
-        $this->layoutParams[$key] = $value;
+        $curParams = $this->params;
+        $this->params = array_merge($curParams, $params);
     }
 
     /**
      * Рендерит готовую страницу
-     * @param string $content - контент основной части
+     * @param array $params - параметры
      */
-    public function renderPage(string $content)
+    public function renderFullPage(array $params = [])
     {
-        $parameters = array_merge($this->layoutParams, [
-            'content' => $content,
-            'alerts' => Session::getAlert(),
+        $allParams = array_merge($this->params, $params, [
+            'alerts' => Session::getAlert()
         ]);
 
-        $this->renderTemplate('layout/layout', $parameters, true);
+        $this->renderTemplate('layout/layout', $allParams, true);
     }
 
     /**
      * Рендерит шаблон
      * @param string $viewName - имя шаблона
-     * @param array $parameters - параметры
+     * @param array $params - параметры
      * @param boolean $isPrint - флаг отображения шаблона
      * @return string
      */
-    public function renderTemplate(string $viewName, $parameters = [], $isPrint = false)
+    public function renderTemplate(string $viewName, array $params = [], bool $isPrint = false)
     {
 
         $template = ROOT . '/views/' . $viewName . '.php';
 
-        extract($parameters);
+        extract($params);
 
         ob_start();
         include $template;

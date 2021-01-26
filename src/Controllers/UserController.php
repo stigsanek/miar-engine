@@ -68,10 +68,11 @@ class UserController extends BaseController
         $context = $this->view->renderTemplate('user/info', ['user' => $this->userSession]);
         $content = $this->view->renderTemplate('user/index', ['context' => $context]);
 
-        $this->view->setLayoutParam('title', 'Информация · Профиль');
-        $this->view->setLayoutParam('tab', 'profile');
-
-        $this->view->renderPage($content);
+        $this->view->renderFullPage([
+            'title' => 'Информация | Профиль',
+            'tab' => 'profile',
+            'content' => $content
+        ]);
     }
 
     /**
@@ -102,9 +103,10 @@ class UserController extends BaseController
         $context = $this->view->renderTemplate('user/security', ['errors' => $form->getErrors()]);
         $content = $this->view->renderTemplate('user/index', ['context' => $context]);
 
-        $this->view->setLayoutParam('title', 'Безопасность · Профиль');
-        $this->view->setLayoutParam('tab', 'profile');
-
-        $this->view->renderPage($content);
+        $this->view->renderFullPage([
+            'title' => 'Безопасность | Профиль',
+            'tab' => 'profile',
+            'content' => $content
+        ]);
     }
 }

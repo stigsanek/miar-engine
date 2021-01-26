@@ -15,11 +15,10 @@ class AdminController extends BaseController
 
         $this->checkAdmin();
 
-        $content = $this->view->renderTemplate('admin/index');
-
-        $this->view->setLayoutParam('title', 'Панель администратора');
-        $this->view->setLayoutParam('tab', 'admin');
-
-        $this->view->renderPage($content);
+        $this->view->renderFullPage([
+            'title' => 'Панель администратора',
+            'tab' => 'admin',
+            'content' => $this->view->renderTemplate('admin/index')
+        ]);
     }
 }

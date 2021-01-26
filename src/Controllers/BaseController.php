@@ -59,7 +59,7 @@ class BaseController
     public function beforeAction()
     {
         if ($this->userSession->isAuthUser()) {
-            $this->view->setLayoutParam('user', $this->userSession);
+            $this->view->setParams(['user' => $this->userSession]);
         } else {
             $controller = new UserController();
             $controller->actionLogin();
@@ -77,8 +77,10 @@ class BaseController
             'error' => ['code' => $code, 'msg' => $this->httpErrorCodes[$code]]
         ]);
 
-        $this->view->setLayoutParam('title', 'Ошибка' . $code);
-        $this->view->renderPage($content);
+        $this->view->renderFullPage([
+            'title' => 'Ошибка' . $code,
+            'content' => $content
+        ]);
 
         http_response_code($code);
     }

@@ -50,7 +50,7 @@ class Request
      * @param object $form - форма
      * @param boolean $isTrim - флаг отсечения пробелов по краям
      */
-    public function loadData(object $form, $isTrim = true)
+    public function loadData(object $form, bool $isTrim = true)
     {
         foreach ($form->dataFields as $field) {
             if (isset($_POST[$field])) {
