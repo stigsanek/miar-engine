@@ -40,7 +40,7 @@ class Uploader
     /**
      * Загружает файл на сервер
      * @param string $fileName - имя файла
-     * @param string $path - путь загрузки
+     * @param mixed $path - путь загрузки
      */
     public function upload(string $fileName, $path = null)
     {

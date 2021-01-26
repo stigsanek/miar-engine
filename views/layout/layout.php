@@ -2,7 +2,7 @@
 
 <body>
     <!--Header start-->
-    <header >
+    <header>
         <nav>
             <ul>
                 <li class="<?php if ($tab === 'main') : ?>active<?php endif; ?>">

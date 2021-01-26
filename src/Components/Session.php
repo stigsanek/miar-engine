@@ -158,8 +158,8 @@ class Session
     }
 
     /**
-     * Возвращает уведомление из сессии
-     * @return string
+     * Возвращает уведомления из сессии
+     * @return array
      */
     public static function getAlert()
     {

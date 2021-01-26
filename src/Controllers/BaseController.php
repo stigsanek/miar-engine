@@ -85,7 +85,7 @@ class BaseController
 
     /**
      * Переадресует по заданному пути
-     * @param string $path - путь
+     * @param mixed $path - путь
      */
     protected function redirect($path = null)
     {
