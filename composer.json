@@ -1,0 +1,21 @@
+{
+  "name": "stigsanek/miar-engine",
+  "description": "MVC-engine for web apps",
+  "type": "template",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "stigsanek",
+      "email": "stigsanek@yandex.ru"
+    }
+  ],
+  "config": {
+    "optimize-autoloader": true,
+    "vendor-dir": "vendor/"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  }
+}
