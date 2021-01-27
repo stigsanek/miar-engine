@@ -10,13 +10,13 @@ class MainController extends BaseController
     public function actionIndex()
     {
         if (!$this->request->isGet()) {
-            return $this->actionError(405);
+            $this->actionError(405);
         }
 
-        $this->view->renderFullPage([
+        $this->view->render('layout/layout', [
             'title' => 'Главная',
             'tab' => 'main',
-            'content' => $this->view->renderTemplate('main/index')
-        ]);
+            'content' => $this->view->render('main/index')
+        ], true);
     }
 }

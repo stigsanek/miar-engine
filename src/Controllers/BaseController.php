@@ -18,7 +18,7 @@ class BaseController
     protected $request;
 
     /**
-     * Компонент взаимодействия с сессией
+     * Компонент текущей сессии пользователя
      */
     protected $userSession;
 
@@ -49,22 +49,15 @@ class BaseController
     {
         $this->request = new Request();
         $this->userSession = new Session();
-        $this->userModel = new User();
-        $this->view = new View();
     }
 
     /**
-     * Проверяет аутентификацию пользователя перед вызовом action
+     * Выполняет любую логику перед вызовом action
      */
     public function beforeAction()
     {
-        if ($this->userSession->isAuthUser()) {
-            $this->view->setParams(['user' => $this->userSession]);
-        } else {
-            $controller = new UserController();
-            $controller->actionLogin();
-            exit;
-        }
+        $this->userModel = new User();
+        $this->view = new View($this->userSession);
     }
 
     /**
@@ -73,26 +66,26 @@ class BaseController
      */
     public function actionError(int $code)
     {
-        $content = $this->view->renderTemplate('error/error', [
-            'error' => ['code' => $code, 'msg' => $this->httpErrorCodes[$code]]
-        ]);
-
-        $this->view->renderFullPage([
-            'title' => 'Ошибка' . $code,
-            'content' => $content
-        ]);
+        $this->view->render('error/error', [
+            'error' => ['code' => $code, 'msg' => $this->httpErrorCodes[$code]],
+            'title' => 'Ошибка' . $code
+        ], true);
 
         http_response_code($code);
+        exit;
     }
 
     /**
-     * Переадресует по заданному пути
-     * @param mixed $path - путь
+     * Проверяет аутентификацию пользователя
      */
-    protected function redirect($path = null)
+    public function checkAuthUser()
     {
-        header('Location: ' . '/' . $path);
-        exit;
+        if (!$this->userSession->isAuthUser()) {
+            $controller = new UserController();
+            $controller->beforeAction();
+            $controller->actionLogin();
+            exit;
+        }
     }
 
     /**
@@ -118,5 +111,15 @@ class BaseController
         header('Content-Type: application/json');
         echo json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         http_response_code($code);
+    }
+
+    /**
+     * Переадресует по заданному пути
+     * @param mixed $path - путь
+     */
+    protected function redirect($path = null)
+    {
+        header('Location: ' . '/' . $path);
+        exit;
     }
 }

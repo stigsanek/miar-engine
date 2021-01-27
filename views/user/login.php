@@ -3,6 +3,7 @@
 <body>
     <h1>Страница входа</h1>
     <!--Alerts start-->
+    <?php $alerts = $user->getAlert(); ?>
     <?php if (isset($alerts)) : ?>
         <?php foreach ($alerts as $alert) : ?>
             <p><?= $alert['type']; ?></p>
@@ -26,7 +27,7 @@
                     <p><?= $errors['password']; ?></p>
                 <?php endif; ?>
             </div>
-            <div class="form-group mb-4">
+            <div>
                 <button type="submit" name="sign_in">Войти</button>
             </div>
         </form>

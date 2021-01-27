@@ -32,7 +32,7 @@ class Router
 
         foreach ($this->routes as $uriPattern => $path) {
             if (preg_match("%$uriPattern%", $uri)) {
-                $internalRoute = preg_replace("%$uriPattern%", $path, $uri);
+                $internalRoute = preg_replace("%$uriPattern%", $path[0], $uri);
                 $segments = explode('/', $internalRoute);
 
                 $lastSegParams = explode('?', $segments[array_key_last($segments)]);
@@ -44,8 +44,14 @@ class Router
 
                 if (method_exists($controllerName, $actionName)) {
                     $parameters = $segments;
+
                     $controllerObject = new $controllerName();
                     $controllerObject->beforeAction();
+
+                    if (isset($path[1])) {
+                        $controllerObject->checkAuthUser();
+                    }
+
                     call_user_func_array([$controllerObject, $actionName], $parameters);
                     break;
                 } else {

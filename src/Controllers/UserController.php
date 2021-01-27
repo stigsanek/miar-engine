@@ -36,10 +36,9 @@ class UserController extends BaseController
             }
         }
 
-        $this->view->renderTemplate('user/login', [
+        $this->view->render('user/login', [
             'title' => 'Авторизация',
-            'errors' => $form->getErrors(),
-            'alerts' => $this->userSession->getAlert()
+            'errors' => $form->getErrors()
         ], true);
     }
 
@@ -49,7 +48,7 @@ class UserController extends BaseController
     public function actionLogout()
     {
         if (!$this->request->isGet()) {
-            return $this->actionError(405);
+            $this->actionError(405);
         }
 
         $this->userSession->logout();
@@ -62,17 +61,16 @@ class UserController extends BaseController
     public function actionInfo()
     {
         if (!$this->request->isGet()) {
-            return $this->actionError(405);
+            $this->actionError(405);
         }
 
-        $context = $this->view->renderTemplate('user/info', ['user' => $this->userSession]);
-        $content = $this->view->renderTemplate('user/index', ['context' => $context]);
+        $context = $this->view->render('user/info');
 
-        $this->view->renderFullPage([
+        $this->view->render('layout/layout', [
             'title' => 'Информация | Профиль',
             'tab' => 'profile',
-            'content' => $content
-        ]);
+            'content' => $this->view->render('user/index', ['context' => $context])
+        ], true);
     }
 
     /**
@@ -100,13 +98,13 @@ class UserController extends BaseController
             }
         }
 
-        $context = $this->view->renderTemplate('user/security', ['errors' => $form->getErrors()]);
-        $content = $this->view->renderTemplate('user/index', ['context' => $context]);
+        $context = $this->view->render('user/security', ['errors' => $form->getErrors()]);
+        $content = $this->view->render('user/index', ['context' => $context]);
 
-        $this->view->renderFullPage([
+        $this->view->render('layout/layout', [
             'title' => 'Безопасность | Профиль',
             'tab' => 'profile',
             'content' => $content
-        ]);
+        ], true);
     }
 }

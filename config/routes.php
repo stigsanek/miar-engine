@@ -1,12 +1,15 @@
 <?php
 
 return [
-    'admin' => 'admin/index',
+    // 'path' => ['controller/action', check auth]
+    'admin' => ['admin/index', true],
 
-    'logout' => 'user/logout',
-    'profile/info' => 'user/info',
-    'profile/security' => 'user/security',
+    'login' => ['user/login'],
+    'logout' => ['user/logout', true],
 
-    'index' => 'main/index',
-    '' => 'main/index',
+    'profile/info' => ['user/info', true],
+    'profile/security' => ['user/security', true],
+
+    'index' => ['main/index'],
+    '' => ['main/index']
 ];

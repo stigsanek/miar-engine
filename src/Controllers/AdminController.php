@@ -10,15 +10,15 @@ class AdminController extends BaseController
     public function actionIndex()
     {
         if (!$this->request->isGet()) {
-            return $this->actionError(405);
+            $this->actionError(405);
         }
 
         $this->checkAdmin();
 
-        $this->view->renderFullPage([
+        $this->view->render('layout/layout', [
             'title' => 'Панель администратора',
             'tab' => 'admin',
-            'content' => $this->view->renderTemplate('admin/index')
-        ]);
+            'content' => $this->view->render('admin/index')
+        ], true);
     }
 }

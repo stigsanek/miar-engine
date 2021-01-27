@@ -15,10 +15,14 @@
                 <?php endif; ?>
             </ul>
             <ul>
-                <li class="<?php if ($tab === 'profile') : ?>active<?php endif; ?>">
-                    <a href="/profile/info"><?= $user->getUserLogin(); ?></a>
-                </li>
-                <li><a href="/logout">Выйти</a></li>
+                <?php if ($user->isAuthUser()) : ?>
+                    <li class="<?php if ($tab === 'profile') : ?>active<?php endif; ?>">
+                        <a href="/profile/info"><?= $user->getUserLogin(); ?></a>
+                    </li>
+                    <li><a href="/logout">Выйти</a></li>
+                <?php else : ?>
+                    <li><a href="/login">Войти</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
     </header>
@@ -27,6 +31,7 @@
     <main>
         <div>
             <!--Alerts start-->
+            <?php $alerts = $user->getAlert(); ?>
             <?php if (isset($alerts)) : ?>
                 <?php foreach ($alerts as $alert) : ?>
                     <p><?= $alert['type']; ?></p>

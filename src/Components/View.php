@@ -8,44 +8,31 @@ namespace App\Components;
 class View
 {
     /**
-     * Параметры шаблона
+     * Компонент текущей сессии пользователя
      */
-    private $params = [];
+    private $userSession;
 
     /**
-     * Устанавливает параметры в $params
-     * @param array $params - параметры
+     * Конструктор
+     * @param object $userSession - объект сессии пользователя
      */
-    public function setParams(array $params)
+    public function __construct(object $userSession)
     {
-        $curParams = $this->params;
-        $this->params = array_merge($curParams, $params);
-    }
-
-    /**
-     * Рендерит готовую страницу
-     * @param array $params - параметры
-     */
-    public function renderFullPage(array $params = [])
-    {
-        $allParams = array_merge($this->params, $params, [
-            'alerts' => Session::getAlert()
-        ]);
-
-        $this->renderTemplate('layout/layout', $allParams, true);
+        $this->userSession = $userSession;
     }
 
     /**
      * Рендерит шаблон
      * @param string $viewName - имя шаблона
      * @param array $params - параметры
-     * @param bool $isPrint - флаг отображения шаблона
+     * @param bool $isPrint - флаг вывода шаблона из буфера
      * @return string
      */
-    public function renderTemplate(string $viewName, array $params = [], bool $isPrint = false)
+    public function render(string $viewName, array $params = [], bool $isPrint = false)
     {
 
         $template = ROOT . '/views/' . $viewName . '.php';
+        $params['user'] = $this->userSession;
 
         extract($params);
 
