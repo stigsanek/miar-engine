@@ -1,7 +1,5 @@
 /* PostgreSQL fixtures */
-
-DROP TABLE IF EXISTS
-users,
+DROP TABLE IF EXISTS users,
 accesses;
 
 CREATE TABLE accesses (
@@ -9,10 +7,12 @@ CREATE TABLE accesses (
   user_role text NOT NULL
 );
 
-INSERT INTO accesses (user_role) VALUES
-('admin'),
-('user'),
-('guest');
+INSERT INTO
+  accesses (user_role)
+VALUES
+  ('admin'),
+  ('user'),
+  ('guest');
 
 CREATE TABLE users (
   user_id serial NOT NULL PRIMARY KEY,
@@ -24,7 +24,37 @@ CREATE TABLE users (
   pass_status integer NOT NULL
 );
 
-INSERT INTO users (user_login, pass, access_id, first_name, last_name, pass_status) VALUES
-('admin', '$2y$10$KjmWsHscQwUnwUbAy0D2fe8ErN47.O3mX0ymj9Jdk.yL325dFz4Km', 1, 'First Name', 'Last Name', 0),
-('user', '$2y$10$KjmWsHscQwUnwUbAy0D2fe8ErN47.O3mX0ymj9Jdk.yL325dFz4Km', 2, 'First Name', 'Last Name', 0),
-('guest', '$2y$10$KjmWsHscQwUnwUbAy0D2fe8ErN47.O3mX0ymj9Jdk.yL325dFz4Km', 3, 'First Name', 'Last Name', 0);
+INSERT INTO
+  users (
+    user_login,
+    pass,
+    access_id,
+    first_name,
+    last_name,
+    pass_status
+  )
+VALUES
+  (
+    'admin',
+    '$2y$10$KjmWsHscQwUnwUbAy0D2fe8ErN47.O3mX0ymj9Jdk.yL325dFz4Km',
+    1,
+    'First Name',
+    'Last Name',
+    0
+  ),
+  (
+    'user',
+    '$2y$10$KjmWsHscQwUnwUbAy0D2fe8ErN47.O3mX0ymj9Jdk.yL325dFz4Km',
+    2,
+    'First Name',
+    'Last Name',
+    0
+  ),
+  (
+    'guest',
+    '$2y$10$KjmWsHscQwUnwUbAy0D2fe8ErN47.O3mX0ymj9Jdk.yL325dFz4Km',
+    3,
+    'First Name',
+    'Last Name',
+    0
+  );
