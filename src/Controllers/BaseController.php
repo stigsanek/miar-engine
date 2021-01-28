@@ -68,7 +68,7 @@ class BaseController
     {
         $this->view->render('error/error', [
             'error' => ['code' => $code, 'msg' => $this->httpErrorCodes[$code]],
-            'title' => 'Ошибка' . $code
+            'title' => 'Ошибка ' . $code
         ], true);
 
         http_response_code($code);
@@ -124,7 +124,7 @@ class BaseController
     }
 
     /**
-     * Переадресует по заданному пути
+     * Устанавливает уведомление об ошибке в форме
      * @param array $errors - ошибки формы
      * @return array
      */

@@ -8,7 +8,7 @@ namespace App\Components;
 class Request
 {
     /**
-     * Проверяет входящий запрос на тип GIT
+     * Проверяет входящий запрос на тип GET
      * @return bool
      */
     public function isGet()
