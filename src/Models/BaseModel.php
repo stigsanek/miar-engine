@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Components\Database;
-use App\Components\Session;
 
 /**
  * Базовая модель
@@ -11,12 +10,12 @@ use App\Components\Session;
 class BaseModel
 {
     /**
-     * Флаг ошибки выполнения запроса к БД
+     * Статус выполнения операции
      */
     public $isError;
 
     /**
-     * Ошибки выполнения запроса
+     * Ошибки выполнения операции
      */
     protected $errors = [];
 
@@ -36,11 +35,6 @@ class BaseModel
     protected $prepQuery;
 
     /**
-     * Флаг установки уведомлений в сессию
-     */
-    protected $isAlert = true;
-
-    /**
      * Конструктор
      */
     public function __construct()
@@ -49,7 +43,7 @@ class BaseModel
     }
 
     /**
-     * Возвращает данные по ошибке выполнения запроса
+     * Возвращает ошибки выполнения операции
      * @return array
      */
     public function getErrors()
@@ -58,28 +52,16 @@ class BaseModel
     }
 
     /**
-     * Устанавливает уведомление по итогам выполнения запроса
+     * Устанавливает статус выполнения запроса
      * @param mixed $response - ответ БД
      */
     protected function setQueryState($response)
     {
         if (empty($response)) {
             $this->isError = true;
-            $this->errors = $this->prepQuery->errorInfo();
-
-            if ($this->isAlert) {
-                Session::setAlert(
-                    'danger',
-                    'Не удалось выполнить операцию. ' . $this->errors[2]
-                        . ' Код ошибки: ' . $this->errors[0] . '.'
-                );
-            }
+            $this->errors['queryState'] = $this->prepQuery->errorInfo();
         } else {
             $this->isError = false;
-
-            if ($this->isAlert) {
-                Session::setAlert('success', 'Операция успешно выполнена');
-            }
         }
     }
 }

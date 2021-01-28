@@ -2,8 +2,6 @@
 
 namespace App\Forms;
 
-use App\Components\Session;
-
 /**
  * Базовая форма
  */
@@ -45,11 +43,6 @@ class BaseForm
     protected $errors = [];
 
     /**
-     * Флаг установки уведомлений в сессию
-     */
-    protected $isAlert = true;
-
-    /**
      * Устанавливает значения обычным полям
      * @param string $field - имя поля
      * @param mixed $value - значение
@@ -88,6 +81,16 @@ class BaseForm
     }
 
     /**
+     * Устанавливает ошибки валидации
+     * @param array $errors - ошибки формы
+     */
+    public function setErrors(array $errors)
+    {
+        $curErrors = $this->errors;
+        $this->errors = array_merge($curErrors, $errors);
+    }
+
+    /**
      * Возвращает ошибки валидации
      * @return array
      */
@@ -107,13 +110,6 @@ class BaseForm
 
             if (empty($this->errors)) {
                 return true;
-            } else {
-
-                if ($this->isAlert) {
-                    Session::setAlert('danger', 'Пожалуйста, исправьте ошибки в форме');
-                }
-
-                return false;
             }
         } else {
             $this->errors['all'] = 'Отсутствуют данные формы';

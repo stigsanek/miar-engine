@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Components\Session;
-
 /**
  * Модель пользователей
  */
@@ -26,28 +24,19 @@ class User extends BaseModel
         if (!empty($data)) {
             if (password_verify($formData['password'], $data['pass'])) {
                 unset($data['pass']);
-
-                Session::setAlert('primary', 'Добро пожаловать, ' . $data['first_name'] . '!');
-
-                if ($data['pass_status'] == '0') {
-                    Session::setAlert(
-                        'warning',
-                        'В целях безопасности, вам необходимо изменить пароль. '
-                            . 'Пожалуйста, пройдите по <b><a href="/profile/security">ссылке</a></b>.'
-                    );
-                }
+                $data['isActive'] = true;
 
                 return $data;
             }
         }
 
-        $this->isError = true;
-        Session::setAlert('danger', 'Ошибка: неправильно указан логин или пароль');
+        return [];
     }
 
     /**
      * Изменяет пароль
      * @param array $formData - данные формы
+     * @return mixed
      */
     public function changePassword(array $formData)
     {
@@ -57,7 +46,7 @@ class User extends BaseModel
 
             if ($formData['cur_password'] === $formData['new_password']) {
                 $this->isError = true;
-                return Session::setAlert('danger', 'Ошибка: новый пароль не должен совпадать с текущим');
+                return $this->errors['new_password'] = 'Новый пароль не должен совпадать с текущим';
             }
 
             $newPassword = password_hash($formData['new_password'], PASSWORD_DEFAULT);
@@ -70,7 +59,7 @@ class User extends BaseModel
             $this->setQueryState($response);
         } else {
             $this->isError = true;
-            Session::setAlert('danger', 'Ошибка: неправильно указан текущий пароль');
+            return $this->errors['cur_password'] = 'Неправильно указан текущий пароль';
         }
     }
 

@@ -22,15 +22,7 @@ class UserController extends BaseController
 
             if ($form->isReady()) {
                 $userData = $this->userModel->verify($form->getFormData());
-
-                if ($this->userModel->isError) {
-                    http_response_code(400);
-                }
-
-                if (!empty($userData)) {
-                    $this->userSession->authenticate($userData);
-                    $this->redirect();
-                }
+                $this->auth($userData);
             } else {
                 http_response_code(400);
             }
@@ -38,7 +30,7 @@ class UserController extends BaseController
 
         $this->view->render('user/login', [
             'title' => 'Авторизация',
-            'errors' => $form->getErrors()
+            'errors' => $this->setFormErrorAlert($form->getErrors())
         ], true);
     }
 
@@ -52,7 +44,7 @@ class UserController extends BaseController
         }
 
         $this->userSession->logout();
-        $this->redirect();
+        $this->redirect('/');
     }
 
     /**
@@ -85,12 +77,13 @@ class UserController extends BaseController
 
             if ($form->isReady()) {
                 $form->setFormData('user_id', $this->userSession->getUserId());
-
                 $this->userModel->changePassword($form->getFormData());
 
                 if (!$this->userModel->isError) {
-                    $this->redirect('logout');
+                    $this->userSession->setAlert('success', 'Операция успешно выполнена');
+                    $this->redirect('/logout');
                 } else {
+                    $form->setErrors($this->userModel->getErrors());
                     http_response_code(400);
                 }
             } else {
@@ -98,7 +91,9 @@ class UserController extends BaseController
             }
         }
 
-        $context = $this->view->render('user/security', ['errors' => $form->getErrors()]);
+        $context = $this->view->render('user/security', [
+            'errors' => $this->setFormErrorAlert($form->getErrors())
+        ]);
         $content = $this->view->render('user/index', ['context' => $context]);
 
         $this->view->render('layout/layout', [
@@ -106,5 +101,31 @@ class UserController extends BaseController
             'tab' => 'profile',
             'content' => $content
         ], true);
+    }
+
+    /**
+     * Выполняет логику авторизации
+     * @param array $userData - данные пользователя
+     */
+    private function auth(array $userData)
+    {
+        if (isset($userData['isActive'])) {
+            $this->userSession->authenticate($userData);
+
+            if ($userData['pass_status'] == '0') {
+                $this->userSession->setAlert(
+                    'warning',
+                    'В целях безопасности, вам необходимо изменить пароль. '
+                        . 'Пожалуйста, пройдите по <b><a href="/profile/security">ссылке</a></b>.'
+                );
+            }
+
+            $this->redirect('/');
+        }
+
+        if (empty($userData)) {
+            $this->userSession->setAlert('danger', 'Неправильно указан логин или пароль');
+            http_response_code(400);
+        }
     }
 }

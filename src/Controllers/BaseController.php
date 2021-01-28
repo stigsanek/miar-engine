@@ -114,12 +114,29 @@ class BaseController
     }
 
     /**
-     * Переадресует по заданному пути
-     * @param mixed $path - путь
+     * Выполняет переадресацию
+     * @param string $route - маршрут
      */
-    protected function redirect($path = null)
+    protected function redirect(string $route)
     {
-        header('Location: ' . '/' . $path);
+        header('Location: ' . $route);
         exit;
+    }
+
+    /**
+     * Переадресует по заданному пути
+     * @param array $errors - ошибки формы
+     * @return array
+     */
+    protected function setFormErrorAlert(array $errors)
+    {
+        if (!empty($errors)) {
+            $this->userSession->setAlert(
+                'danger',
+                'Пожалуйста, исправьте ошибки в форме'
+            );
+        }
+
+        return $errors;
     }
 }
