@@ -26,6 +26,15 @@ class Request
     }
 
     /**
+     * Возвращает адрес предыдущей страницы
+     * @return string
+     */
+    public function getHttpReferer()
+    {
+        return $_SERVER['HTTP_REFERER'];
+    }
+
+    /**
      * Возвращает GET-параметр запроса
      * @param string $key - ключ параметра в массиве
      * @return string

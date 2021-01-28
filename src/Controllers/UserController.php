@@ -15,6 +15,10 @@ class UserController extends BaseController
      */
     public function actionLogin()
     {
+        if ($this->userSession->isAuthUser()) {
+            $this->redirect('/');
+        }
+
         $form = new LoginForm();
 
         if ($this->request->isSubmitted($form->name)) {
@@ -120,7 +124,7 @@ class UserController extends BaseController
                 );
             }
 
-            $this->redirect('/');
+            $this->redirect($this->request->getHttpReferer());
         }
 
         if (empty($userData)) {
