@@ -30,15 +30,7 @@
     <!--Main start-->
     <main>
         <div>
-            <!--Alerts start-->
-            <?php $alerts = $user->getAlert(); ?>
-            <?php if (isset($alerts)) : ?>
-                <?php foreach ($alerts as $alert) : ?>
-                    <p><?= $alert['type']; ?></p>
-                    <p><?= $alert['message']; ?></p>
-                <?php endforeach; ?>
-            <?php endif; ?>
-            <!--Alerts end-->
+            <?php include ROOT . '/views/layout/_alert.php'; ?>
             <!--Content start-->
             <?= $content; ?>
             <!--Content end-->
