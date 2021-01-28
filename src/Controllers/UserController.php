@@ -64,7 +64,7 @@ class UserController extends BaseController
 
         $this->view->render('layout/layout', [
             'title' => 'Информация | Профиль',
-            'tab' => 'profile',
+            'tab' => 'user',
             'content' => $this->view->render('user/index', ['context' => $context])
         ], true);
     }
@@ -102,7 +102,7 @@ class UserController extends BaseController
 
         $this->view->render('layout/layout', [
             'title' => 'Безопасность | Профиль',
-            'tab' => 'profile',
+            'tab' => 'user',
             'content' => $content
         ], true);
     }

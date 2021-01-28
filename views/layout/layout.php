@@ -16,7 +16,7 @@
             </ul>
             <ul>
                 <?php if ($user->isAuthUser()) : ?>
-                    <li class="<?php if ($tab === 'profile') : ?>active<?php endif; ?>">
+                    <li class="<?php if ($tab === 'user') : ?>active<?php endif; ?>">
                         <a href="/profile/info"><?= $user->getUserLogin(); ?></a>
                     </li>
                     <li><a href="/logout">Выйти</a></li>
