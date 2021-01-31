@@ -53,7 +53,7 @@ class BaseModel
     /**
      * Подготавливает и выполняет запрос
      * @param string $sql - текст запроса
-     * @param string $params - параметры запроса
+     * @param array $params - параметры запроса
      * @return object
      */
     protected function execQuery(string $sql, array $params = [])
