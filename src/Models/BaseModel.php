@@ -10,29 +10,28 @@ use App\Components\Database;
 class BaseModel
 {
     /**
-     * Статус выполнения операции
+     * Флаг ошибки выполнения операции
+     * @var bool
      */
-    public $isError;
+    public $isError = false;
 
     /**
-     * Ошибки выполнения операции
+     * Данные об ошибках
+     * @var array
      */
     protected $errors = [];
 
     /**
      * Подключение к БД
+     * @var object
      */
     protected $db;
 
     /**
      * Имя таблицы в БД
+     * @var string
      */
     protected $table;
-
-    /**
-     * Подготовленный запрос в БД
-     */
-    protected $prepQuery;
 
     /**
      * Конструктор
@@ -43,7 +42,7 @@ class BaseModel
     }
 
     /**
-     * Возвращает ошибки выполнения операции
+     * Возвращает данные об ошибках
      * @return array
      */
     public function getErrors()
@@ -52,16 +51,21 @@ class BaseModel
     }
 
     /**
-     * Устанавливает статус выполнения запроса
-     * @param mixed $response - ответ БД
+     * Подготавливает и выполняет запрос
+     * @param string $sql - текст запроса
+     * @param string $params - параметры запроса
+     * @return object
      */
-    protected function setQueryState($response)
+    protected function execQuery(string $sql, array $params = [])
     {
-        if (empty($response)) {
+        try {
+            $prepQuery = $this->db->prepare($sql);
+            $prepQuery->execute($params);
+
+            return $prepQuery;
+        } catch (\Throwable $th) {
             $this->isError = true;
-            $this->errors['queryState'] = $this->prepQuery->errorInfo();
-        } else {
-            $this->isError = false;
+            $this->errors[] = $th->getMessage();
         }
     }
 }

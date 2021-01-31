@@ -8,8 +8,15 @@ namespace App\Models;
 class User extends BaseModel
 {
     /**
-     * Имя таблицы в БД
+     * Минимальная длина пароля
      */
+    private const PASSWORD_MIN = 8;
+
+    /**
+     * Максимальная длина пароля
+     */
+    private const PASSWORD_MAX = 20;
+
     protected $table = 'users';
 
     /**
@@ -36,31 +43,14 @@ class User extends BaseModel
     /**
      * Изменяет пароль
      * @param array $formData - данные формы
-     * @return mixed
      */
     public function changePassword(array $formData)
     {
-        $user = $this->findItemById($formData['user_id']);
+        $newPassword = password_hash($formData['new_password'], PASSWORD_DEFAULT);
 
-        if (password_verify($formData['cur_password'], $user['pass'])) {
+        $sql = 'UPDATE ' . $this->table . ' SET pass = :pass, pass_status = 1 WHERE user_id = :id';
 
-            if ($formData['cur_password'] === $formData['new_password']) {
-                $this->isError = true;
-                return $this->errors['new_password'] = 'Новый пароль не должен совпадать с текущим';
-            }
-
-            $newPassword = password_hash($formData['new_password'], PASSWORD_DEFAULT);
-
-            $sql = 'UPDATE ' . $this->table . ' SET pass = :pass, pass_status = 1 WHERE user_id = :id';
-
-            $this->prepQuery = $this->db->prepare($sql);
-            $response = $this->prepQuery->execute(['id' => $formData['user_id'], 'pass' => $newPassword]);
-
-            $this->setQueryState($response);
-        } else {
-            $this->isError = true;
-            return $this->errors['cur_password'] = 'Неправильно указан текущий пароль';
-        }
+        $this->execQuery($sql, ['id' => $formData['user_id'], 'pass' => $newPassword]);
     }
 
     /**
@@ -68,16 +58,15 @@ class User extends BaseModel
      * @param string $login - логин пользователя
      * @return array
      */
-    private function findItemByLogin(string $login)
+    public function findItemByLogin(string $login)
     {
         $sql = 'SELECT ' . $this->table . '.*, accesses.user_role AS access_role FROM ' . $this->table . ' '
             . 'LEFT JOIN accesses ON (' . $this->table . '.access_id = accesses.access_id) '
             . 'WHERE ' . $this->table . '.user_login = :login';
 
-        $this->prepQuery = $this->db->prepare($sql);
-        $this->prepQuery->execute(['login' => $login]);
+        $result = $this->execQuery($sql, ['login' => $login]);
 
-        return $this->prepQuery->fetch();
+        return $result->fetch();
     }
 
     /**
@@ -85,15 +74,14 @@ class User extends BaseModel
      * @param mixed $id - id пользователя
      * @return array
      */
-    private function findItemById($id)
+    public function findItemById($id)
     {
         $sql = 'SELECT ' . $this->table . '.*, accesses.user_role AS access_role FROM ' . $this->table . ' '
             . 'LEFT JOIN accesses ON (' . $this->table . '.access_id = accesses.access_id) '
             . 'WHERE ' . $this->table . '.user_id = :id';
 
-        $this->prepQuery = $this->db->prepare($sql);
-        $this->prepQuery->execute(['id' => $id]);
+        $result = $this->execQuery($sql, ['id' => $id]);
 
-        return $this->prepQuery->fetch();
+        return $result->fetch();
     }
 }

@@ -75,19 +75,22 @@ class UserController extends BaseController
     public function actionSecurity()
     {
         $form = new PasswordForm();
+        $form->setFormData('user_id', $this->userSession->getUserId());
 
         if ($this->request->isSubmitted($form->name)) {
             $this->request->loadData($form);
 
             if ($form->isReady()) {
-                $form->setFormData('user_id', $this->userSession->getUserId());
                 $this->userModel->changePassword($form->getFormData());
 
                 if (!$this->userModel->isError) {
                     $this->userSession->setAlert('success', 'Операция успешно выполнена');
                     $this->redirect('/logout');
                 } else {
-                    $form->setErrors($this->userModel->getErrors());
+                    $this->userSession->setAlert(
+                        'danger',
+                        'Ошибка: ' .  implode(', ', $this->userModel->getErrors())
+                    );
                     http_response_code(400);
                 }
             } else {
