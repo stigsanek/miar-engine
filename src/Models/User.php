@@ -10,12 +10,12 @@ class User extends BaseModel
     /**
      * Минимальная длина пароля
      */
-    private const PASSWORD_MIN = 8;
+    public const PASSWORD_MIN = 8;
 
     /**
      * Максимальная длина пароля
      */
-    private const PASSWORD_MAX = 20;
+    public const PASSWORD_MAX = 20;
 
     protected $table = 'users';
 

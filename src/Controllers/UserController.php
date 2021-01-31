@@ -89,7 +89,7 @@ class UserController extends BaseController
                 } else {
                     $this->userSession->setAlert(
                         'danger',
-                        'Ошибка: ' .  implode(', ', $this->userModel->getErrors())
+                        'Ошибка: ' . implode(', ', $this->userModel->getErrors())
                     );
                     http_response_code(400);
                 }
