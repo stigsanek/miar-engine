@@ -12,15 +12,17 @@ class Router
 {
     /**
      * Маршруты
+     * @var array
      */
     private $routes = [];
 
     /**
      * Конструктор
+     * @param array $routes - маршруты
      */
-    public function __construct()
+    public function __construct(array $routes)
     {
-        $this->routes = include_once ROOT . '/config/routes.php';
+        $this->routes = $routes;
     }
 
     /**
