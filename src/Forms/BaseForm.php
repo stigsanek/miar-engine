@@ -9,38 +9,51 @@ class BaseForm
 {
     /**
      * Имя кнопки отправки формы
+     * @var string
      */
     public $name;
 
     /**
      * Названия обычных полей
+     * @var array
      */
     public $dataFields = [];
 
     /**
      * Названия полей файлов
+     * @var array
      */
     public $fileFields = [];
 
     /**
      * Данные обычных полей
+     * @var array
      */
     protected $formData = [];
 
     /**
      * Данные полей файлов
+     * @var array
      */
     protected $formFiles = [];
 
     /**
      * Правила валидации
+     * @var array
      */
     protected $rules = [];
 
     /**
      * Ошибки валидации
+     * @var array
      */
     protected $errors = [];
+
+    /**
+     * Модель данных
+     * @var object
+     */
+    protected $model;
 
     /**
      * Устанавливает значения обычным полям

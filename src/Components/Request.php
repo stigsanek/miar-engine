@@ -41,7 +41,9 @@ class Request
      */
     public function getParam(string $key)
     {
-        return $_GET[$key];
+        if (isset($_GET[$key])) {
+            return $_GET[$key];
+        }
     }
 
     /**
@@ -51,7 +53,9 @@ class Request
      */
     public function getPostParam(string $key)
     {
-        return $_POST[$key];
+        if (isset($_POST[$key])) {
+            return $_POST[$key];
+        }
     }
 
     /**

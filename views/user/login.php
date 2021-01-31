@@ -1,9 +1,9 @@
-<?php include ROOT . '/views/layout/_head.php'; ?>
+<?php include_once  ROOT . '/views/layout/_head.php'; ?>
 
 <body>
     <h1>Страница входа</h1>
 
-    <?php include ROOT . '/views/layout/_alert.php'; ?>
+    <?php include_once  ROOT . '/views/layout/_alert.php'; ?>
 
     <div>
         <form method="POST">
@@ -27,7 +27,7 @@
         </form>
     </div>
 
-    <?php include ROOT . '/views/layout/_script.php'; ?>
+    <?php include_once  ROOT . '/views/layout/_script.php'; ?>
 </body>
 
 </html>

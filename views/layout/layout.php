@@ -1,4 +1,4 @@
-<?php include ROOT . '/views/layout/_head.php'; ?>
+<?php include_once  ROOT . '/views/layout/_head.php'; ?>
 
 <body>
     <!--Header start-->
@@ -30,7 +30,7 @@
     <!--Main start-->
     <main>
         <div>
-            <?php include ROOT . '/views/layout/_alert.php'; ?>
+            <?php include_once  ROOT . '/views/layout/_alert.php'; ?>
             <!--Content start-->
             <?= $content; ?>
             <!--Content end-->
@@ -43,7 +43,7 @@
     </footer>
     <!--Footer end-->
 
-    <?php include ROOT . '/views/layout/_script.php'; ?>
+    <?php include_once  ROOT . '/views/layout/_script.php'; ?>
 </body>
 
 </html>

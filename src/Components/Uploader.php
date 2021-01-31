@@ -9,6 +9,7 @@ class Uploader
 {
     /**
      * Файл
+     * @var mixed
      */
     private $file;
 
