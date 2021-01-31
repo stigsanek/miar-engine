@@ -14,26 +14,31 @@ class BaseController
 {
     /**
      * Компонент обработки запросов
+     * @var object
      */
     protected $request;
 
     /**
      * Компонент текущей сессии пользователя
+     * @var object
      */
     protected $userSession;
 
     /**
      * Модель пользователя
+     * @var object
      */
     protected $userModel;
 
     /**
      * Компонент рендеринга шаблонов страниц
+     * @var object
      */
     protected $view;
 
     /**
      * Коды ошибок HTTP
+     * @var array
      */
     protected $httpErrorCodes = [
         400 => 'Bad Request',
@@ -49,6 +54,8 @@ class BaseController
     {
         $this->request = new Request();
         $this->userSession = new Session();
+        $this->view = new View();
+        $this->userModel = new User();
     }
 
     /**
@@ -56,8 +63,7 @@ class BaseController
      */
     public function beforeAction()
     {
-        $this->userModel = new User();
-        $this->view = new View($this->userSession);
+        $this->view->setParams(['user' => $this->userSession]);
     }
 
     /**

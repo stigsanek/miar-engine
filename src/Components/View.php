@@ -8,17 +8,19 @@ namespace App\Components;
 class View
 {
     /**
-     * Компонент текущей сессии пользователя
+     * Параметры для передачи в шаблон
+     * @var array
      */
-    private $userSession;
+    private $params = [];
 
     /**
-     * Конструктор
-     * @param object $userSession - объект сессии пользователя
+     * Добавляет параметры для передачи в шаблон
+     * @param array $params - параметры
      */
-    public function __construct(object $userSession)
+    public function setParams(array $params)
     {
-        $this->userSession = $userSession;
+        $curParams = $this->params;
+        $this->params = array_merge($curParams, $params);
     }
 
     /**
@@ -32,9 +34,8 @@ class View
     {
 
         $template = ROOT . '/views/' . $viewName . '.php';
-        $params['user'] = $this->userSession;
 
-        extract($params);
+        extract(array_merge($this->params, $params));
 
         ob_start();
         include $template;
