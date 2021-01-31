@@ -60,7 +60,12 @@ class BaseModel
     {
         try {
             $prepQuery = $this->db->prepare($sql);
-            $prepQuery->execute($params);
+            $response = $prepQuery->execute($params);
+
+            if (empty($response)) {
+                $this->isError = true;
+                $this->errors[] = $prepQuery->errorInfo()[2];
+            }
 
             return $prepQuery;
         } catch (\Throwable $th) {
