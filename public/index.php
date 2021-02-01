@@ -12,11 +12,7 @@ $routes = include_once ROOT . '/config/routes.php';
 
 error_reporting(E_ALL);
 
-if ($env['debug']) {
-    ini_set('display_errors', 1);
-} else {
-    ini_set('display_errors', 0);
-}
+$env['debug'] ? ini_set('display_errors', 1) : ini_set('display_errors', 0);
 
 if (!isset($_SESSION)) {
     session_start();
