@@ -124,9 +124,6 @@ class BaseForm
             if (empty($this->errors)) {
                 return true;
             }
-        } else {
-            $this->errors['all'] = 'Отсутствуют данные формы';
-            return false;
         }
     }
 

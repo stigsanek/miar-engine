@@ -112,7 +112,7 @@ class BaseController
      * @param array $data - данные
      * @param int $code - HTTP-код
      */
-    protected function returnJson(array $data, int $code)
+    protected function renderJson(array $data, int $code)
     {
         header('Content-Type: application/json');
         echo json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
