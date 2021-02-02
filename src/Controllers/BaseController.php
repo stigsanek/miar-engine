@@ -89,7 +89,7 @@ class BaseController
         if (!$this->userSession->isAuthUser()) {
             $controller = new UserController();
             $controller->beforeAction();
-            $controller->actionLogin();
+            $controller->login();
             exit;
         }
     }
