@@ -34,27 +34,22 @@ class Router
 
         foreach ($this->routes as $uriPattern => $path) {
             if (preg_match("%$uriPattern%", $uri)) {
-                $internalRoute = preg_replace("%$uriPattern%", $path[0], $uri);
-                $segments = explode('/', $internalRoute);
+                list($class, $action, $isRequireAuth) = $path;
 
-                $lastSegParams = explode('?', $segments[array_key_last($segments)]);
-                $segments[array_key_last($segments)] = $lastSegParams[0];
+                $segments = $this->prepareSegments($uri, $uriPattern, $action);
+                $method = array_shift($segments);
 
-                $name = ucfirst(array_shift($segments));
-                $controllerName = 'App\\Controllers\\' . $name . 'Controller';
-                $actionName = 'action' . ucfirst(array_shift($segments));
+                if (method_exists($class, $method)) {
+                    $params = $segments;
 
-                if (method_exists($controllerName, $actionName)) {
-                    $parameters = $segments;
-
-                    $controllerObject = new $controllerName();
+                    $controllerObject = new $class();
                     $controllerObject->beforeAction();
 
-                    if (isset($path[1])) {
+                    if ($isRequireAuth) {
                         $controllerObject->checkAuthUser();
                     }
 
-                    call_user_func_array([$controllerObject, $actionName], $parameters);
+                    call_user_func_array([$controllerObject, $method], $params);
                     break;
                 } else {
                     $controllerObject = new BaseController();
@@ -64,5 +59,23 @@ class Router
                 }
             }
         }
+    }
+
+    /**
+     * Подготавливает сегменты маршрута
+     * @param string $uri - URI запроса
+     * @param string $uriPattern - URI маршрута
+     * @param string $action - action с параметрами
+     * @return array
+     */
+    private function prepareSegments(string $uri, string $uriPattern, string $action)
+    {
+        $internalRoute = preg_replace("%$uriPattern%", $action, $uri);
+        $segments = explode('/', $internalRoute);
+
+        $lastSegParams = explode('?', $segments[array_key_last($segments)]);
+        $segments[array_key_last($segments)] = array_shift($lastSegParams);
+
+        return $segments;
     }
 }

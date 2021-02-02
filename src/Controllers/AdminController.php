@@ -7,7 +7,7 @@ namespace App\Controllers;
  */
 class AdminController extends BaseController
 {
-    public function actionIndex()
+    public function index()
     {
         if (!$this->request->isGet()) {
             $this->actionError(405);

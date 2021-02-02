@@ -1,15 +1,18 @@
 <?php
 
+use App\Controllers\AdminController;
+use App\Controllers\MainController;
+use App\Controllers\UserController;
+
 return [
-    // 'path' => ['controller/action', check auth]
-    'admin' => ['admin/index', true],
+    'admin' => [AdminController::class, 'index', true],
 
-    'login' => ['user/login'],
-    'logout' => ['user/logout', true],
+    'login' => [UserController::class, 'login', false],
+    'logout' => [UserController::class, 'logout', true],
 
-    'profile/info' => ['user/info', true],
-    'profile/security' => ['user/security', true],
+    'profile/info' => [UserController::class, 'info', true],
+    'profile/security' => [UserController::class, 'security', true],
 
-    'index' => ['main/index'],
-    '' => ['main/index']
+    'index' => [MainController::class, 'index', false],
+    '' => [MainController::class, 'index', false]
 ];

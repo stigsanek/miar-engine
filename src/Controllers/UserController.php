@@ -13,7 +13,7 @@ class UserController extends BaseController
     /**
      * Action входа в приложение
      */
-    public function actionLogin()
+    public function login()
     {
         if ($this->userSession->isAuthUser()) {
             $this->redirect('/');
@@ -41,7 +41,7 @@ class UserController extends BaseController
     /**
      * Action выхода из приложения
      */
-    public function actionLogout()
+    public function logout()
     {
         if (!$this->request->isGet()) {
             $this->actionError(405);
@@ -54,7 +54,7 @@ class UserController extends BaseController
     /**
      * Action раздела профиля пользователя
      */
-    public function actionInfo()
+    public function info()
     {
         if (!$this->request->isGet()) {
             $this->actionError(405);
@@ -72,7 +72,7 @@ class UserController extends BaseController
     /**
      * Action раздела изменения пароля
      */
-    public function actionSecurity()
+    public function security()
     {
         $form = new PasswordForm();
         $form->setFormData('user_id', $this->userSession->getUserId());

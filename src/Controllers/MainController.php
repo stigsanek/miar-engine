@@ -7,7 +7,7 @@ namespace App\Controllers;
  */
 class MainController extends BaseController
 {
-    public function actionIndex()
+    public function index()
     {
         if (!$this->request->isGet()) {
             $this->actionError(405);
