@@ -64,7 +64,7 @@ class BaseModel
 
             if (empty($response)) {
                 $this->isError = true;
-                $this->errors[] = $prepQuery->errorInfo()[2];
+                $this->errors[] = $prepQuery->errorInfo()[0];
             }
 
             return $prepQuery;
