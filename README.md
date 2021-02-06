@@ -357,6 +357,7 @@ Repeating parts of views can be placed in a separate file and included in pages.
 ## Forms
 
 Miar Engine provides class `App\Forms\BaseForm` that makes it easy to validate your forms.
+When the form is submitted, a check is performed according to the specified rules. An error message is added for fields that fail validation.
 
 ### Ussage
 
