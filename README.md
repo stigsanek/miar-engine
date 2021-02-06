@@ -22,7 +22,7 @@ The standard template contains the home page, user profile and admin panel.
 
 * Clone this git repository.
 * Set your database connection settings in the `config/database.php` file.
-* Migrate fixtures from file `migration/fixtures.sql` to your database.
+* Migrate data from file `migration/fixtures.sql` to your database.
 * In the console cd to folder of your project and run `composer install`.
 
 ### Running Application
@@ -73,9 +73,14 @@ Go to: [http://localhost:8000/randomnumber](http://localhost:8000/randomnumber).
 
 Component `App\Components\Router` is responsible for routing. When your application receives a request, it calls a controller action to generate the response. The routing configuration defines which action to run for each incoming URL. It also provides other useful features, like generating SEO-friendly URLs (e.g. `/read/intro-to-miar-engine` instead of `index.php?article_id=57`).
 
-Each route consists of 4 required components: route URL, controller class, controller method, user authorization check flag (`false` by default).
+Each route consists of 4 required components:
 
-It is important to remember that the main page route must be located at the very end of the route array.
+1. Route URL. 
+2. Controller class.
+3. Controller method.
+4. User authorization check flag (`false` by default).
+
+**It is important to remember that the main page route must be located at the very end of the route array.**
 
 ```php
 <?php
@@ -136,7 +141,7 @@ public function index()
 }
 ```
 
-If you are building API you need to display json. The `renderJson()` method returns json view:
+If you are building API you need to display JSON. The `renderJson()` method returns JSON view:
 
 ```php
 public function index()
@@ -378,7 +383,7 @@ class YourForm extends BaseForm
 }
 ```
 
-* Fill in the form with the data in your controller:
+* Fill in the form with the data in controller:
 
 ```php
 public function login()
@@ -428,7 +433,7 @@ public function login()
 
 ### Validation
 
-The `BaseForm` contains basic validation methods, but you can easily create your own rules right in your form class:
+`BaseForm` contains basic validation methods, but you can easily create your own rules right in your form class:
 
 ```php
 protected $rules = [
