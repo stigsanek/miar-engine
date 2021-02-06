@@ -7,8 +7,8 @@ The standard template contains the home page, user profile and admin panel.
 * [Routing](#Routing)
 * [Controllers](#Controllers)
 * [Models](#Models)
-* [Forms](#Forms)
 * [Views](#Views)
+* [Forms](#Forms)
 * [Configuration](#Configuration)
 
 ## Setup
@@ -18,11 +18,15 @@ The standard template contains the home page, user profile and admin panel.
 * Install PHP 7.2.0 or higher.
 * [Install Composer](https://getcomposer.org/download/), which is used to install PHP packages.
 
-### Running Application
+### Setting
 
 * Clone this git repository.
 * Set your database connection settings in the `config/database.php` file.
+* Migrate fixtures from file `migration/fixtures.sql` to your database.
 * In the console cd to folder of your project and run `composer install`.
+
+### Running Application
+
 * In the console cd to folder `public` of your project and run `php -S 127.0.0.1:8000`.
 * Open [http://localhost:8000](http://localhost:8000) in your browser.
 
@@ -290,9 +294,6 @@ public function security()
 }
 ```
 
-## Forms
-
-
 ## Views
 
 The view is responsible for presenting data to end users. This PHP scripts that mainly contain HTML code and PHP code that is responsible for appearance. Views are managed by the Application `App\Componenets\View` component, which contains a rendering method for the view.
@@ -328,7 +329,7 @@ public function index()
     $context = $this->view->render('main/index');
 
     $this->view->render('layout/layout', [
-        'title' => 'Главная',
+        'title' => 'Home',
         'tab' => 'main',
         'content' => $context
     ], true);
@@ -348,5 +349,104 @@ Repeating parts of views can be placed in a separate file and included in pages.
 </body>
 ```
 
+## Forms
+
+Miar Engine provides class `App\Forms\BaseForm` that makes it easy to validate your forms.
+
+### Ussage
+
+You can create form classes by extending the `BaseForm` class.
+
+* Define field names and submit buttons.
+* Configure validation rules.
+
+```php
+<?php
+
+namespace App\Forms;
+
+class YourForm extends BaseForm
+{
+    public $name = 'send_data';
+
+    public $dataFields = ['first_name', 'last_name', 'age'];
+
+    protected $rules = [
+        ['required', ['first_name', 'age']],
+        ['numeric', ['age']]
+    ];
+}
+```
+
+* Fill in the form with the data in your controller:
+
+```php
+public function login()
+{   
+    ...
+
+    $form = new YourForm();
+
+    if ($this->request->isSubmitted($form->name)) {
+        $this->request->loadData($form);
+
+        if ($form->isReady()) {
+            $model->createData($form->getFormData());
+        } else {
+            http_response_code(400);
+        }
+    }
+
+    $this->view->render('main/index', [
+        'errors' => $this->setFormErrorAlert($form->getErrors())
+    ], true);
+}
+```
+
+* Create a form in your view:
+
+```php
+<form method="POST">
+    <div>
+        <input type="text" name="first_name">
+        <?php if (isset($errors['first_name'])) : ?>
+            <p><?= $errors['first_name']; ?></p>
+        <?php endif; ?>
+    </div>
+    <div>
+        <input type="text" name="last_name">
+    </div>
+    <div>
+        <input type="text" name="age">
+        <?php if (isset($errors['age'])) : ?>
+            <p><?= $errors['age']; ?></p>
+        <?php endif; ?>
+    </div>
+    <button type="submit" name="send_data">Send</button>
+</form>
+```
+
+### Validation
+
+The `BaseForm` contains basic validation methods, but you can easily create your own rules right in your form class:
+
+```php
+protected $rules = [
+    ['char', ['new_password', 'new_password_repeat']]
+];
+
+protected function runCharValidator(array $fields)
+{
+    foreach ($fields as $field) {
+        if (!preg_match('/(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])/', $this->formData[$field])) {
+            $this->errors[$field] = 'Password value does not meet requirements';
+        }
+    }
+}
+```
+
 ## Configuration
+
+Basic application settings are set in the front controller `public/index.php`.
+File `config\.env.php` contains the error display mode parameter. You can include your parameters here and create any logic with them in `public\index.php`.
 
