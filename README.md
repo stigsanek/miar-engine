@@ -2,14 +2,14 @@
 The foundation on which the best [MVC](https://en.wikipedia.org/wiki/Model–view–controller) web applications are built. Nothing extra. Only vanilla PHP.
 The standard template contains the home page, user profile and admin panel.
 
-* [Setup](##Setup)
-* [Create page](##Create-page)
-* [Routing](##Routing)
-* [Controllers](##Controllers)
-* [Models](##Models)
-* [Forms](##Forms)
-* [Views](##Views)
-* [Configuration](##Configuration)
+* [Setup](#Setup)
+* [Create page](#Create-page)
+* [Routing](#Routing)
+* [Controllers](#Controllers)
+* [Models](#Models)
+* [Forms](#Forms)
+* [Views](#Views)
+* [Configuration](#Configuration)
 
 ## Setup
 
@@ -30,7 +30,7 @@ The standard template contains the home page, user profile and admin panel.
 
 Creating a new page - whether it’s an HTML page or a JSON endpoint - is a two-step process:
 
-1. **Create a route:** A route is the URL (e.g. /about) to your page and points to a controller.
+1. **Create a route:** A route is the URL (e.g. `/about`) to your page and points to a controller.
 2. **Create a controller:** A controller is the PHP function you write that builds the page. You take the incoming request information and use it to create a response, which can hold HTML content or JSON string.
 
 Suppose you want to create a page - `/randomnumber` - that generates a random number and prints it. To do that, create a `RandomController` class and a `index` method inside of it:
@@ -202,7 +202,7 @@ public function index()
 
 public function item()
 {   
-    $this->userSession->getData('numbers');
+    $data = $this->userSession->getData('numbers');
     $this->userSession->resetData('numbers');
 
     ...
@@ -217,10 +217,10 @@ Miar Engine provides a request object to any controller method. With it you can 
 public function index()
 {   
     // GET by key
-    $this->request->getParam('date');
+    $getParam = $this->request->getParam('date');
 
     // POST by key
-    $this->request->getPostParam('date');
+    $postParam = $this->request->getPostParam('date');
 
     ...
 }
