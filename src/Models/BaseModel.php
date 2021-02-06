@@ -16,22 +16,22 @@ class BaseModel
     public $isError = false;
 
     /**
+     * Имя таблицы в БД
+     * @var string
+     */
+    protected $table;
+
+    /**
      * Данные об ошибках
      * @var array
      */
-    protected $errors = [];
+    private $errors = [];
 
     /**
      * Подключение к БД
      * @var object
      */
-    protected $db;
-
-    /**
-     * Имя таблицы в БД
-     * @var string
-     */
-    protected $table;
+    private $db;
 
     /**
      * Конструктор
