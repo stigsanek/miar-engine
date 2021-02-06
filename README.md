@@ -67,7 +67,7 @@ Go to: [http://localhost:8000/randomnumber](http://localhost:8000/randomnumber).
 
 ## Routing
 
-When your application receives a request, it calls a controller action to generate the response. The routing configuration defines which action to run for each incoming URL. It also provides other useful features, like generating SEO-friendly URLs (e.g. `/read/intro-to-miar-engine` instead of `index.php?article_id=57`).
+Component `App\Components\Router` is responsible for routing. When your application receives a request, it calls a controller action to generate the response. The routing configuration defines which action to run for each incoming URL. It also provides other useful features, like generating SEO-friendly URLs (e.g. `/read/intro-to-miar-engine` instead of `index.php?article_id=57`).
 
 Each route consists of 4 required components: route URL, controller class, controller method, user authorization check flag (`false` by default).
 
@@ -111,7 +111,12 @@ The controller is objects of classes inherited from `App\Controller\BaseControll
 If you want to redirect the user to another page, use the `redirect()` method:
 
 ```php
-return $this->redirect('/index');
+public function index()
+{
+    ...
+
+    return $this->redirect('/index');
+}
 ```
 
 ### Rendering Views
@@ -119,13 +124,23 @@ return $this->redirect('/index');
 If you’re serving HTML, you’ll want to render a template. The `render()` method renders a template and puts that content into a response:
 
 ```php
-$this->view->render('article/index', ['articles' => $model->findAll()], true);
+public function index()
+{
+    ...
+
+    $this->view->render('article/index', ['articles' => $model->findAll()], true);
+}
 ```
 
 If you are building API you need to display json. The `renderJson()` method returns json view:
 
 ```php
-$this->renderJson(['data' => $data], 200);
+public function index()
+{
+    ...
+
+    $this->renderJson(['data' => $data], 200);
+}
 ```
 
 ### Managing Errors
@@ -161,7 +176,7 @@ public function index()
 
 ### Managing the Session
 
-Miar Engine provides a session service that you can use to store information about the user between requests.
+Miar Engine provides a session service `App\Components\Session` that you can use to store information about the user between requests.
 
 #### Flash Messages
 
@@ -276,6 +291,62 @@ public function security()
 ```
 
 ## Forms
+
+
 ## Views
+
+The view is responsible for presenting data to end users. This PHP scripts that mainly contain HTML code and PHP code that is responsible for appearance. Views are managed by the Application `App\Componenets\View` component, which contains a rendering method for the view.
+
+### Parameters
+
+You can pass any parameters to the view by specifying the name of the variable used in the view in an associative array:
+
+```php
+// Yor Controller
+public function index()
+{   
+    ...
+
+    $this->view->render('layout/layout', ['text' => 'Hello, World!'], true);
+}
+
+// Your View
+<body>
+    <p><?= $text; ?></p>
+</body>
+```
+
+### Nested Rendering
+
+You can use nested rendering with multiple views. The last parameter of the `render()` method is responsible for the final rendering of the page to the user.
+
+```php
+public function index()
+{
+    ...
+
+    $context = $this->view->render('main/index');
+
+    $this->view->render('layout/layout', [
+        'title' => 'Главная',
+        'tab' => 'main',
+        'content' => $context
+    ], true);
+}
+```
+
+### Partial View
+
+Repeating parts of views can be placed in a separate file and included in pages. 
+
+```php
+<?php include_once  ROOT . '/views/layout/_head.php'; ?>
+
+<body>
+  ...
+  <?php include_once  ROOT . '/views/layout/_script.php'; ?>
+</body>
+```
+
 ## Configuration
 
