@@ -22,7 +22,7 @@ The standard template contains the home page, user profile and admin panel.
 
 * Clone this git repository.
 * Set your database connection settings in the `config/database.php` file.
-* Migrate data from file `migration/fixtures.sql` to your database.
+* Migrate data from file `migration/fixtures.sql` to your database (the current file contains data for PostgreSQL).
 * In the console cd to folder of your project and run `composer install`.
 
 ### Running Application
@@ -455,4 +455,3 @@ protected function runCharValidator(array $fields)
 
 Basic application settings are set in the front controller `public/index.php`.
 File `config\.env.php` contains the error display mode parameter. You can include your parameters here and create any logic with them in `public\index.php`.
-
