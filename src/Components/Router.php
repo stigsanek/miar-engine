@@ -6,19 +6,19 @@ use App\Components\Request;
 use App\Controllers\BaseController;
 
 /**
- * Компонент маршрутизации
+ * Routing component
  */
 class Router
 {
     /**
-     * Маршруты
+     * Routes
      * @var array
      */
     private $routes = [];
 
     /**
-     * Конструктор
-     * @param array $routes - маршруты
+     * Constructor
+     * @param array $routes - routes
      */
     public function __construct(array $routes)
     {
@@ -26,7 +26,7 @@ class Router
     }
 
     /**
-     * Запускает маршрутизацию
+     * Starts routing
      */
     public function run()
     {
@@ -62,10 +62,10 @@ class Router
     }
 
     /**
-     * Подготавливает сегменты маршрута
-     * @param string $uri - URI запроса
-     * @param string $uriPattern - URI маршрута
-     * @param string $action - action с параметрами
+     * Prepares route segments
+     * @param string $uri - request URI
+     * @param string $uriPattern - route URI
+     * @param string $action - action with parameters
      * @return array
      */
     private function prepareSegments(string $uri, string $uriPattern, string $action)

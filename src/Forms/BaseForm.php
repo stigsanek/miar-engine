@@ -3,62 +3,62 @@
 namespace App\Forms;
 
 /**
- * Базовая форма
+ * Base form
  */
 class BaseForm
 {
     /**
-     * Имя кнопки отправки формы
+     * Name of the form submit button
      * @var string
      */
     public $name;
 
     /**
-     * Названия обычных полей
+     * Field names
      * @var array
      */
     public $dataFields = [];
 
     /**
-     * Названия полей файлов
+     * Files field names
      * @var array
      */
     public $fileFields = [];
 
     /**
-     * Данные обычных полей
+     * Fields data
      * @var array
      */
     protected $formData = [];
 
     /**
-     * Данные полей файлов
+     * Files fields data
      * @var array
      */
     protected $formFiles = [];
 
     /**
-     * Правила валидации
+     * Validation rules
      * @var array
      */
     protected $rules = [];
 
     /**
-     * Ошибки валидации
+     * Validation errors
      * @var array
      */
     protected $errors = [];
 
     /**
-     * Модель данных
+     * Data model
      * @var object
      */
     protected $model;
 
     /**
-     * Устанавливает значения обычным полям
-     * @param string $field - имя поля
-     * @param mixed $value - значение
+     * Sets values to fields
+     * @param string $field - field
+     * @param mixed $value - value
      */
     public function setFormData(string $field, $value)
     {
@@ -66,7 +66,7 @@ class BaseForm
     }
 
     /**
-     * Возвращает даннные обычных полей
+     * Returns data of fields
      * @return array
      */
     public function getFormData()
@@ -75,9 +75,9 @@ class BaseForm
     }
 
     /**
-     * Устанавливает значения полям файлов
-     * @param string $field - имя поля
-     * @param mixed $value - значение
+     * Sets values to files fields
+     * @param string $field - field
+     * @param mixed $value - value
      */
     public function setFormFiles(string $field, $file)
     {
@@ -85,7 +85,7 @@ class BaseForm
     }
 
     /**
-     * Возвращает даннные полей файлов
+     * Returns data of files fields
      * @return array
      */
     public function getFormFiles()
@@ -94,8 +94,8 @@ class BaseForm
     }
 
     /**
-     * Устанавливает ошибки валидации
-     * @param array $errors - ошибки формы
+     * Sets validation errors
+     * @param array $errors - form errors
      */
     public function setErrors(array $errors)
     {
@@ -104,7 +104,7 @@ class BaseForm
     }
 
     /**
-     * Возвращает ошибки валидации
+     * Returns validation errors
      * @return array
      */
     public function getErrors()
@@ -113,7 +113,7 @@ class BaseForm
     }
 
     /**
-     * Проверяет получение данных и запускает валидацию
+     * Checks data receipt and starts validation
      * @return bool
      */
     public function isReady()
@@ -128,7 +128,7 @@ class BaseForm
     }
 
     /**
-     * Запускает валидацию согласно массиву правил
+     * Runs validation according to an array of rules
      */
     protected function validate()
     {
@@ -141,9 +141,9 @@ class BaseForm
     }
 
     /**
-     * Запускает необходимый метод валидации
-     * @param string $name - имя правила
-     * @param mixed $fields - поля
+     * Runs the required validation method
+     * @param string $name - rule name
+     * @param mixed $fields - fields
      */
     protected function runValidator(string $name, $fields)
     {
@@ -155,21 +155,21 @@ class BaseForm
     }
 
     /**
-     * Валидация дат
-     * @param array $fields - поля
+     * Date validation
+     * @param array $fields - fields
      */
     protected function runDateValidator(array $fields)
     {
         foreach ($fields as $field) {
             if (!preg_match('/^20[0-9]{2}\-[0-1]{1}[0-9]{1}\-[0-3]{1}[0-9]{1}/', $this->formData[$field])) {
-                $this->errors[$field] = 'Значение поля должно быть датой в формате ДД.ММ.ГГГГ';
+                $this->errors[$field] = 'The field value must be a date in the format DD.MM.YYYY';
             }
         }
     }
 
     /**
-     * Валидация изображений
-     * @param array $fields - поля
+     * Image validation
+     * @param array $fields - fields
      */
     protected function runImageValidator(array $fields)
     {
@@ -186,34 +186,34 @@ class BaseForm
                 }
 
                 if (empty($result)) {
-                    $this->errors[$field] = 'Загруженный файл должен быть изображением формата *.jpeg или *.png';
+                    $this->errors[$field] = 'The uploaded file must be an image in * .jpeg or * .png format';
                 }
             }
         }
     }
 
     /**
-     * Валидация числовых полей
-     * @param array $fields - поля
+     * Checking numeric fields
+     * @param array $fields - fields
      */
     protected function runNumericValidator(array $fields)
     {
         foreach ($fields as $field) {
             if (!preg_match('/[0-9]+/', $this->formData[$field]) || $this->formData[$field] <= 0) {
-                $this->errors[$field] = 'Значение поля должно быть положительным числом';
+                $this->errors[$field] = 'The field value must be a positive number';
             }
         }
     }
 
     /**
-     * Валидация обязательных полей
-     * @param array $fields - поля
+     * Validation of required fields
+     * @param array $fields - fields
      */
     protected function runRequiredValidator(array $fields)
     {
         foreach ($fields as $field) {
             if (empty($this->formData[$field])) {
-                $this->errors[$field] = 'Значение поля не должно быть пустым';
+                $this->errors[$field] = 'The field value must not be empty';
             }
         }
     }

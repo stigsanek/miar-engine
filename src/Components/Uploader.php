@@ -3,19 +3,19 @@
 namespace App\Components;
 
 /**
- * Компонент загрузки файлов
+ * File upload component
  */
 class Uploader
 {
     /**
-     * Файл
+     * File
      * @var mixed
      */
     private $file;
 
     /**
-     * Конструктор
-     * @param mixed $file - файл
+     * Constructor
+     * @param mixed $file - file
      */
     public function __construct($file)
     {
@@ -23,8 +23,8 @@ class Uploader
     }
 
     /**
-     * Генерирует имя файла
-     * @param string $prefix - префикс имени
+     * Generates file name
+     * @param string $prefix - name prefix
      * @return string
      */
     public function generateFileName(string $prefix)
@@ -39,9 +39,9 @@ class Uploader
     }
 
     /**
-     * Загружает файл на сервер
-     * @param string $fileName - имя файла
-     * @param mixed $path - путь загрузки
+     * Uploads a file to the server
+     * @param string $fileName - file name
+     * @param mixed $path - loading path
      */
     public function upload(string $fileName, $path = null)
     {

@@ -5,36 +5,36 @@ namespace App\Models;
 use App\Components\Database;
 
 /**
- * Базовая модель
+ * Base model
  */
 class BaseModel
 {
     /**
-     * Флаг ошибки выполнения операции
+     * Request execution error flag
      * @var bool
      */
     public $isError = false;
 
     /**
-     * Имя таблицы в БД
+     * Name of the table in the database
      * @var string
      */
     protected $table;
 
     /**
-     * Данные об ошибках
+     * Error data
      * @var array
      */
     private $errors = [];
 
     /**
-     * Подключение к БД
+     * Database connection
      * @var object
      */
     private $db;
 
     /**
-     * Конструктор
+     * Constructor
      */
     public function __construct()
     {
@@ -42,7 +42,7 @@ class BaseModel
     }
 
     /**
-     * Возвращает данные об ошибках
+     * Returns error data
      * @return array
      */
     public function getErrors()
@@ -51,9 +51,9 @@ class BaseModel
     }
 
     /**
-     * Подготавливает и выполняет запрос
-     * @param string $sql - текст запроса
-     * @param array $params - параметры запроса
+     * Prepares and executes the request
+     * @param string $sql - request text
+     * @param array $params - request parameters
      * @return object
      */
     protected function execQuery(string $sql, array $params = [])

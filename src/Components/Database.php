@@ -5,12 +5,12 @@ namespace App\Components;
 use PDO;
 
 /**
- * Компонент базы данных
+ * Database component
  */
 class Database
 {
     /**
-     * Возвращает подключение к БД
+     * Returns the connection to the database
      * @return object
      */
     public static function getDataBase()

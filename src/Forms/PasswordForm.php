@@ -5,7 +5,7 @@ namespace App\Forms;
 use App\Models\User;
 
 /**
- * Форма изменения пароля
+ * Password change form
  */
 class PasswordForm extends BaseForm
 {
@@ -22,7 +22,7 @@ class PasswordForm extends BaseForm
     ];
 
     /**
-     * Конструктор
+     * Constructor
      */
     public function __construct()
     {
@@ -30,21 +30,21 @@ class PasswordForm extends BaseForm
     }
 
     /**
-     * Валидация символов пароля
-     * @param array $fields - поля
+     * Password characters check
+     * @param array $fields - fields
      */
     protected function runCharValidator(array $fields)
     {
         foreach ($fields as $field) {
             if (!preg_match('/(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])/', $this->formData[$field])) {
-                $this->errors[$field] = 'Значение пароля не соответствует необходимым требованиям';
+                $this->errors[$field] = 'Password value does not meet requirements';
             }
         }
     }
 
     /**
-     * Валидация длины пароля
-     * @param array $fields - поля
+     * Password length validation
+     * @param array $fields - fields
      */
     protected function runLengthValidator(array $fields)
     {
@@ -52,26 +52,26 @@ class PasswordForm extends BaseForm
             $length = strlen($this->formData[$field]);
 
             if (($length > 0 && $length < $this->model::PASSWORD_MIN) || $length > $this->model::PASSWORD_MAX) {
-                $this->errors[$field] = 'Значение пароля не попадает в указанный диапазон длинны';
+                $this->errors[$field] = 'Password value does not fall within the specified length range';
             }
         }
     }
 
     /**
-     * Валидация совпадения введенных паролей
-     * @param string $field - поле
+     * Checking if the entered passwords match
+     * @param string $field - field
      */
     protected function runRepeatValidator(string $field)
     {
         if ($this->formData['new_password'] !== $this->formData[$field]) {
-            $this->errors[$field] = 'Указанные пароли не совпадают';
+            $this->errors[$field] = 'The specified passwords do not match';
             $this->errors['new_password'] = $this->errors[$field];
         }
     }
 
     /**
-     * Валидация соответствия текущего пароля и не равенство текущего и нового пароля
-     * @param string $field - поле
+     * Checking whether the current password matches and the current and new password do not match
+     * @param string $field - field
      */
     protected function runCurrentValidator(string $field)
     {
@@ -79,10 +79,10 @@ class PasswordForm extends BaseForm
 
         if (password_verify($this->formData[$field], $user['pass'])) {
             if ($this->formData[$field] === $this->formData['new_password']) {
-                $this->errors['new_password'] = 'Новый пароль не должен совпадать с текущим';
+                $this->errors['new_password'] = 'The new password must not be the same as the current one';
             }
         } else {
-            $this->errors[$field] = 'Неправильно указан текущий пароль';
+            $this->errors[$field] = 'Current password is incorrect';
         }
     }
 }

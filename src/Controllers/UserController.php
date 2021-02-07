@@ -6,12 +6,12 @@ use App\Forms\LoginForm;
 use App\Forms\PasswordForm;
 
 /**
- * Контролер пользователя
+ * User controller
  */
 class UserController extends BaseController
 {
     /**
-     * Action входа в приложение
+     * Application login action
      */
     public function login()
     {
@@ -33,13 +33,13 @@ class UserController extends BaseController
         }
 
         $this->view->render('user/login', [
-            'title' => 'Авторизация',
+            'title' => 'Authorization',
             'errors' => $this->setFormErrorAlert($form->getErrors())
         ], true);
     }
 
     /**
-     * Action выхода из приложения
+     * Application exit action
      */
     public function logout()
     {
@@ -52,7 +52,7 @@ class UserController extends BaseController
     }
 
     /**
-     * Action раздела профиля пользователя
+     * Profile action
      */
     public function info()
     {
@@ -63,14 +63,14 @@ class UserController extends BaseController
         $context = $this->view->render('user/info');
 
         $this->view->render('layout/layout', [
-            'title' => 'Информация | Профиль',
+            'title' => 'Information | Profile',
             'tab' => 'user',
             'content' => $this->view->render('user/index', ['context' => $context])
         ], true);
     }
 
     /**
-     * Action раздела изменения пароля
+     * Change password action
      */
     public function security()
     {
@@ -84,12 +84,12 @@ class UserController extends BaseController
                 $this->userModel->changePassword($form->getFormData());
 
                 if (!$this->userModel->isError) {
-                    $this->userSession->setAlert('success', 'Операция успешно выполнена');
+                    $this->userSession->setAlert('success', 'Completed successfully');
                     $this->redirect('/logout');
                 } else {
                     $this->userSession->setAlert(
                         'danger',
-                        'Ошибка: ' . implode(', ', $this->userModel->getErrors())
+                        'Error: ' . implode(', ', $this->userModel->getErrors())
                     );
                     http_response_code(400);
                 }
@@ -104,15 +104,15 @@ class UserController extends BaseController
         $content = $this->view->render('user/index', ['context' => $context]);
 
         $this->view->render('layout/layout', [
-            'title' => 'Безопасность | Профиль',
+            'title' => 'Security | Profile',
             'tab' => 'user',
             'content' => $content
         ], true);
     }
 
     /**
-     * Выполняет логику авторизации
-     * @param array $userData - данные пользователя
+     * Performs authorization logic
+     * @param array $userData - user data
      */
     private function auth(array $userData)
     {
@@ -122,8 +122,8 @@ class UserController extends BaseController
             if ($userData['pass_status'] == '0') {
                 $this->userSession->setAlert(
                     'warning',
-                    'В целях безопасности, вам необходимо изменить пароль. '
-                        . 'Пожалуйста, пройдите по <b><a href="/profile/security">ссылке</a></b>.'
+                    'For security purposes, you need to '
+                        . '<b><a href="/profile/security">change your password</a></b>'
                 );
             }
 
@@ -131,7 +131,7 @@ class UserController extends BaseController
         }
 
         if (empty($userData)) {
-            $this->userSession->setAlert('danger', 'Неправильно указан логин или пароль');
+            $this->userSession->setAlert('danger', 'Login or password is incorrect');
             http_response_code(400);
         }
     }

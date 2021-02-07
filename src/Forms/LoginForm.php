@@ -3,7 +3,7 @@
 namespace App\Forms;
 
 /**
- * Форма входа в приложение
+ * Application login form
  */
 class LoginForm extends BaseForm
 {

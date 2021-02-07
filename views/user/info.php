@@ -1,7 +1,7 @@
-<h2>Профиль пользователя</h2>
+<h2>Information</h2>
 <section>
-    <h3>Общие сведения</h3>
-    <p>Логин: <span><?= $user->getUserLogin(); ?></span></p>
-    <p>Полное имя: <span><?= $user->getUserFullName(); ?></span></p>
-    <p>Уровень доступа: <span><?= $user->getAccess(); ?></span></p>
+    <h3>General information</h3>
+    <p>Login: <span><?= $user->getUserLogin(); ?></span></p>
+    <p>Full name: <span><?= $user->getUserFullName(); ?></span></p>
+    <p>Access level: <span><?= $user->getAccess(); ?></span></p>
 </section>

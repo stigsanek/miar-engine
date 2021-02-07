@@ -3,12 +3,12 @@
 namespace App\Components;
 
 /**
- * Компонент обработки запросов
+ * Request processing component
  */
 class Request
 {
     /**
-     * Проверяет входящий запрос на тип GET
+     * Checks incoming request for GET type
      * @return bool
      */
     public function isGet()
@@ -17,7 +17,7 @@ class Request
     }
 
     /**
-     * Проверяет входящий запрос на тип POST
+     * Checks incoming request for POST type
      * @return bool
      */
     public function isPost()
@@ -26,7 +26,7 @@ class Request
     }
 
     /**
-     * Возвращает адрес предыдущей страницы
+     * Returns the address of the previous page
      * @return string
      */
     public function getHttpReferer()
@@ -35,8 +35,8 @@ class Request
     }
 
     /**
-     * Возвращает GET-параметр запроса
-     * @param string $key - ключ параметра в массиве
+     * Returns the GET request parameter
+     * @param string $key - parameter key
      * @return string
      */
     public function getParam(string $key)
@@ -47,8 +47,8 @@ class Request
     }
 
     /**
-     * Возвращает POST-параметр запроса
-     * @param string $key - ключ параметра в массиве
+     * Returns the POST request parameter
+     * @param string $key - parameter key
      * @return string
      */
     public function getPostParam(string $key)
@@ -59,9 +59,9 @@ class Request
     }
 
     /**
-     * Загружает данные в форму
-     * @param object $form - форма
-     * @param bool $isTrim - флаг отсечения пробелов по краям
+     * Loads data into a form
+     * @param object $form - form
+     * @param bool $isTrim - whitespace clipping flag
      */
     public function loadData(object $form, bool $isTrim = true)
     {
@@ -83,8 +83,8 @@ class Request
     }
 
     /**
-     * Проверяет отправку формы
-     * @param string $name - имя кнопки отправки в форме
+     * Form submission confirmation
+     * @param string $name - the name of the submit button in the form
      * @return bool
      */
     public function isSubmitted(string $name)
@@ -93,7 +93,7 @@ class Request
     }
 
     /**
-     * Возвращает путь маршрута
+     * Returns the path of the route
      * @return string
      */
     public static function getUri()

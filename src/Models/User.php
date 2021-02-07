@@ -3,25 +3,25 @@
 namespace App\Models;
 
 /**
- * Модель пользователей
+ * User model
  */
 class User extends BaseModel
 {
     /**
-     * Минимальная длина пароля
+     * Minimum password length
      */
     public const PASSWORD_MIN = 8;
 
     /**
-     * Максимальная длина пароля
+     * Maximum password length
      */
     public const PASSWORD_MAX = 20;
 
     protected $table = 'users';
 
     /**
-     * Проверят пользователя в момент входа в приложение
-     * @param array $formData - данные формы
+     * Checks the user at the moment of entering the application
+     * @param array $formData - form data
      * @return array
      */
     public function verify(array $formData)
@@ -41,8 +41,8 @@ class User extends BaseModel
     }
 
     /**
-     * Изменяет пароль
-     * @param array $formData - данные формы
+     * Changes password
+     * @param array $formData - form data
      */
     public function changePassword(array $formData)
     {
@@ -54,8 +54,8 @@ class User extends BaseModel
     }
 
     /**
-     * Возвращает пользователя по логину
-     * @param string $login - логин пользователя
+     * Finds a user by login
+     * @param string $login - user login
      * @return array
      */
     public function findItemByLogin(string $login)
@@ -70,8 +70,8 @@ class User extends BaseModel
     }
 
     /**
-     * Возвращает пользователя по id
-     * @param mixed $id - id пользователя
+     * Finds a user by id
+     * @param mixed $id - user id
      * @return array
      */
     public function findItemById($id)

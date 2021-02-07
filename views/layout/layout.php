@@ -6,11 +6,11 @@
         <nav>
             <ul>
                 <li class="<?php if ($tab === 'main') : ?>active<?php endif; ?>">
-                    <a href="/">Главная</a>
+                    <a href="/">Home</a>
                 </li>
                 <?php if ($user->isAdmin()) : ?>
                     <li class="<?php if ($tab === 'admin') : ?>active<?php endif; ?>">
-                        <a href="/admin">Панель администратора</a>
+                        <a href="/admin">Admin panel</a>
                     </li>
                 <?php endif; ?>
             </ul>
@@ -19,9 +19,9 @@
                     <li class="<?php if ($tab === 'user') : ?>active<?php endif; ?>">
                         <a href="/profile/info"><?= $user->getUserLogin(); ?></a>
                     </li>
-                    <li><a href="/logout">Выйти</a></li>
+                    <li><a href="/logout">Sign out</a></li>
                 <?php else : ?>
-                    <li><a href="/login">Войти</a></li>
+                    <li><a href="/login">Sign in</a></li>
                 <?php endif; ?>
             </ul>
         </nav>

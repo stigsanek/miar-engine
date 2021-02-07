@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 /**
- * Контроллер главной страницы
+ * Home page controller
  */
 class MainController extends BaseController
 {
@@ -14,7 +14,7 @@ class MainController extends BaseController
         }
 
         $this->view->render('layout/layout', [
-            'title' => 'Главная',
+            'title' => 'Home',
             'tab' => 'main',
             'content' => $this->view->render('main/index')
         ], true);

@@ -3,19 +3,19 @@
 namespace App\Components;
 
 /**
- * Компонент рендеринга шаблонов страниц
+ * Views component
  */
 class View
 {
     /**
-     * Параметры для передачи в шаблон
+     * Parameters
      * @var array
      */
     private $params = [];
 
     /**
-     * Добавляет параметры для передачи в шаблон
-     * @param array $params - параметры
+     * Adds parameters
+     * @param array $params - parameters
      */
     public function setParams(array $params)
     {
@@ -24,10 +24,10 @@ class View
     }
 
     /**
-     * Рендерит шаблон
-     * @param string $viewName - имя шаблона
-     * @param array $params - параметры
-     * @param bool $isPrint - флаг вывода шаблона из буфера
+     * Renders a view
+     * @param string $viewName - view name
+     * @param array $params - parameters
+     * @param bool $isPrint - flag for outputting the view from the buffer
      * @return string
      */
     public function render(string $viewName, array $params = [], bool $isPrint = false)

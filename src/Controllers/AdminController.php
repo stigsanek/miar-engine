@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 /**
- * Контроллер панели администратора
+ * Admin panel controller
  */
 class AdminController extends BaseController
 {
@@ -16,7 +16,7 @@ class AdminController extends BaseController
         $this->checkAdmin();
 
         $this->view->render('layout/layout', [
-            'title' => 'Панель администратора',
+            'title' => 'Admin panel',
             'tab' => 'admin',
             'content' => $this->view->render('admin/index')
         ], true);

@@ -3,12 +3,12 @@
 namespace App\Components;
 
 /**
- * Компонент взаимодействия с сессией
+ * Session component
  */
 class Session
 {
     /**
-     * Проверяет аутентификацию пользователя
+     * Checks user authentication
      * @return bool
      */
     public function isAuthUser()
@@ -19,8 +19,8 @@ class Session
     }
 
     /**
-     * Логинит пользователя
-     * @param array $userData - данные о пользователе из БД
+     * Performs authorization
+     * @param array $userData - user data from the database
      */
     public function authenticate(array $userData)
     {
@@ -33,7 +33,7 @@ class Session
     }
 
     /**
-     * Разлогинивает пользователя
+     * Logs out
      */
     public function logout()
     {
@@ -46,7 +46,7 @@ class Session
     }
 
     /**
-     * Возвращает id пользователя
+     * Returns user id
      * @return string
      */
     public function getUserId()
@@ -55,7 +55,7 @@ class Session
     }
 
     /**
-     * Возвращает логин пользователя
+     * Returns user login
      * @return string
      */
     public function getUserLogin()
@@ -64,7 +64,7 @@ class Session
     }
 
     /**
-     * Возвращает полное имя пользователя
+     * Returns user full name
      * @return string
      */
     public function getUserFullName()
@@ -73,7 +73,7 @@ class Session
     }
 
     /**
-     * Проверяет роль admin
+     * Checks "admin" role
      * @return bool
      */
     public function isAdmin()
@@ -82,7 +82,7 @@ class Session
     }
 
     /**
-     * Проверяет роль user
+     * Checks "user" role
      * @return bool
      */
     public function isUser()
@@ -91,7 +91,7 @@ class Session
     }
 
     /**
-     * Проверяет роль guest
+     * Checks "guest" role
      * @return bool
      */
     public function isGuest()
@@ -100,7 +100,7 @@ class Session
     }
 
     /**
-     * Возвращает роль пользователя
+     * Returns the user's role
      * @return string
      */
     public function getAccess()
@@ -111,9 +111,9 @@ class Session
     }
 
     /**
-     * Записывает данные в сессию
-     * @param string $value - имя переменной для сессии
-     * @param mixed $data - данные
+     * Writes data to the session
+     * @param string $value - variable name
+     * @param mixed $data - data
      */
     public function setData(string $value, $data)
     {
@@ -122,8 +122,8 @@ class Session
     }
 
     /**
-     * Возвращает данные из сессии
-     * @param string $value - имя переменной в сессии
+     * Returns data from the session
+     * @param string $value - variable name
      * @return mixed
      */
     public function getData(string $value)
@@ -134,8 +134,8 @@ class Session
     }
 
     /**
-     * Удаляет данные из сессии
-     * @param string $value - имя переменной в сессии
+     * Removes data from session
+     * @param string $value - variable name
      */
     public function resetData(string $value)
     {
@@ -145,11 +145,11 @@ class Session
     }
 
     /**
-     * Записывает уведомление в сессию
-     * @param string $type - имя css-класса уведомлений
-     * @param string $message - сообщение
+     * Writes a notification to the session
+     * @param string $type - css class
+     * @param string $message - message
      */
-    public static function setAlert(string $type, string $message)
+    public function setAlert(string $type, string $message)
     {
         $_SESSION['flash'] = ['type' => $type, 'message' => $message];
         $_SESSION['alerts'][] = $_SESSION['flash'];
@@ -158,10 +158,10 @@ class Session
     }
 
     /**
-     * Возвращает уведомления из сессии
+     * Returns a notification from the session
      * @return array
      */
-    public static function getAlert()
+    public function getAlert()
     {
         if (isset($_SESSION['alerts'])) {
             $alerts = $_SESSION['alerts'];

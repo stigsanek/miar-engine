@@ -8,36 +8,36 @@ use App\Components\View;
 use App\Models\User;
 
 /**
- * Базовый контроллер
+ * Base controller
  */
 class BaseController
 {
     /**
-     * Компонент обработки запросов
+     * Request processing component
      * @var object
      */
     protected $request;
 
     /**
-     * Компонент текущей сессии пользователя
+     * User session component
      * @var object
      */
     protected $userSession;
 
     /**
-     * Модель пользователя
+     * User model
      * @var object
      */
     protected $userModel;
 
     /**
-     * Компонент рендеринга шаблонов страниц
+     * Views component
      * @var object
      */
     protected $view;
 
     /**
-     * Коды ошибок HTTP
+     * HTTP error codes
      * @var array
      */
     protected $httpErrorCodes = [
@@ -48,7 +48,7 @@ class BaseController
     ];
 
     /**
-     * Конструктор
+     * Constructor
      */
     public function __construct()
     {
@@ -59,7 +59,7 @@ class BaseController
     }
 
     /**
-     * Выполняет любую логику перед вызовом action
+     * Executes any logic before calling the action
      */
     public function beforeAction()
     {
@@ -67,14 +67,14 @@ class BaseController
     }
 
     /**
-     * Action страницы ошибок
-     * @param int $code - код ошибки
+     * Error page action
+     * @param int $code - error code
      */
     public function actionError(int $code)
     {
         $this->view->render('error/error', [
             'error' => ['code' => $code, 'msg' => $this->httpErrorCodes[$code]],
-            'title' => 'Ошибка ' . $code
+            'title' => 'Error ' . $code
         ], true);
 
         http_response_code($code);
@@ -82,7 +82,7 @@ class BaseController
     }
 
     /**
-     * Проверяет аутентификацию пользователя
+     * Checks user authentication
      */
     public function checkAuthUser()
     {
@@ -95,7 +95,7 @@ class BaseController
     }
 
     /**
-     * Проверяет роль admin
+     * Helper method checks the role "admin"
      * @return bool
      */
     protected function checkAdmin()
@@ -108,9 +108,9 @@ class BaseController
     }
 
     /**
-     * Формирует JSON Response
-     * @param array $data - данные
-     * @param int $code - HTTP-код
+     * Generates JSON Response
+     * @param array $data - data
+     * @param int $code - HTTP code
      */
     protected function renderJson(array $data, int $code)
     {
@@ -120,8 +120,8 @@ class BaseController
     }
 
     /**
-     * Выполняет переадресацию
-     * @param string $route - маршрут
+     * Execute redirecting
+     * @param string $route - route
      */
     protected function redirect(string $route)
     {
@@ -130,8 +130,8 @@ class BaseController
     }
 
     /**
-     * Устанавливает уведомление об ошибке в форме
-     * @param array $errors - ошибки формы
+     * Sets an error notification on a form
+     * @param array $errors - form errors
      * @return array
      */
     protected function setFormErrorAlert(array $errors)
@@ -139,7 +139,7 @@ class BaseController
         if (!empty($errors)) {
             $this->userSession->setAlert(
                 'danger',
-                'Пожалуйста, исправьте ошибки в форме'
+                'Please correct errors in the form'
             );
         }
 
