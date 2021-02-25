@@ -68,7 +68,11 @@ class Request
         foreach ($form->dataFields as $field) {
             if (isset($_POST[$field])) {
                 if ($isTrim) {
-                    $form->setFormData($field, trim($_POST[$field]));
+                    if (is_array($_POST[$field])) {
+                        $form->setFormData($field, $_POST[$field]);
+                    } else {
+                        $form->setFormData($field, trim($_POST[$field]));
+                    }
                 } else {
                     $form->setFormData($field, $_POST[$field]);
                 }
