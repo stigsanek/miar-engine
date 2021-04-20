@@ -454,4 +454,4 @@ protected function runCharValidator(array $fields)
 ## Configuration
 
 Basic application settings are set in the front controller `public/index.php`.
-File `config\.env.php` contains the error display mode parameter. You can include your parameters here and create any logic with them in `public\index.php`.
+File `config/.env.php` contains the error display mode parameter. You can include your parameters here and create any logic with them in `public/index.php`.
