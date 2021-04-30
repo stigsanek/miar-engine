@@ -18,7 +18,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-date_default_timezone_set('Europe/Samara');
+date_default_timezone_set($env['timezone']);
 
 $router = new Router($routes);
 $router->run();
