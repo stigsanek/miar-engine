@@ -41,10 +41,9 @@ class Uploader
     /**
      * Uploads a file to the server
      * @param string $fileName - file name
-     * @param mixed $path - loading path
      */
-    public function upload(string $fileName, $path = null)
+    public function upload(string $fileName)
     {
-        move_uploaded_file($this->file['tmp_name'], UPLOAD_PATH . $path . DIRECTORY_SEPARATOR . $fileName);
+        move_uploaded_file($this->file['tmp_name'], UPLOAD_PATH . DIRECTORY_SEPARATOR . $fileName);
     }
 }

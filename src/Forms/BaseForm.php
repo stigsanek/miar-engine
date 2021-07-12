@@ -118,7 +118,7 @@ class BaseForm
      */
     public function isReady()
     {
-        if (!empty($this->formData)) {
+        if (!empty($this->formData) || !empty($this->formFiles)) {
             $this->validate();
 
             if (empty($this->errors)) {
