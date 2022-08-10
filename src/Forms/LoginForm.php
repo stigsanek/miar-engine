@@ -9,7 +9,7 @@ class LoginForm extends BaseForm
 {
     public $name = 'sign_in';
 
-    public $dataFields = ['login', 'password', 'database'];
+    public $dataFields = ['login', 'password'];
 
     protected $rules = [
         ['required', ['login', 'password']]
