@@ -15,12 +15,8 @@ class Database
      */
     public static function getDataBase()
     {
-        $parameters = include ROOT . '/config/database.php';
-
         $option = [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_EMULATE_PREPARES => false];
 
-        $db = new PDO($parameters['dsn'], $parameters['user'], $parameters['password'], $option);
-
-        return $db;
+        return new PDO($_ENV['DB_DSN'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $option);
     }
 }
